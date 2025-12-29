@@ -1,9 +1,15 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { FiClock, FiUsers, FiTrendingUp, FiShield, FiZap, FiHeart } from 'react-icons/fi';
 import './Features.css';
 
 const Features = () => {
+  const navigate = useNavigate();
+
+  const handleExploreFeatures = () => {
+    navigate('/features');
+  };
   const features = [
     {
       icon: FiClock,
@@ -140,6 +146,7 @@ const Features = () => {
         >
           <motion.button
             className="features-btn"
+            onClick={handleExploreFeatures}
             whileHover={{ 
               scale: 1.05,
               boxShadow: "0 15px 30px rgba(255, 215, 0, 0.3)"

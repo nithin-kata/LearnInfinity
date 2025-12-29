@@ -4,6 +4,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { FiHome, FiStar, FiUsers, FiCompass, FiAward, FiMessageCircle, FiMenu, FiX, FiUser } from 'react-icons/fi';
 import UserDashboard from './UserDashboard';
+import LogoutButton from './LogoutButton';
 import './Sidebar.css';
 
 const Sidebar = () => {
@@ -135,7 +136,24 @@ const Sidebar = () => {
 
           {/* CTA Button or User Dashboard */}
           {isAuthenticated ? (
-            <UserDashboard />
+            <>
+              <UserDashboard />
+              <motion.div
+                className="sidebar-logout"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.8 }}
+              >
+                <LogoutButton 
+                  variant="ghost" 
+                  size="small" 
+                  className="sidebar-logout-btn"
+                  showConfirmation={true}
+                >
+                  Logout Account
+                </LogoutButton>
+              </motion.div>
+            </>
           ) : (
             <motion.div
               className="sidebar-cta"

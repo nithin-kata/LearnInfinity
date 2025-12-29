@@ -1,11 +1,41 @@
 import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { FiAward, FiStar, FiUsers, FiBookOpen, FiMapPin, FiLinkedin, FiGithub, FiGlobe } from 'react-icons/fi';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import { FiAward, FiStar, FiUsers, FiBookOpen, FiMapPin, FiLinkedin, FiGithub, FiGlobe, FiX, FiCalendar, FiClock, FiCheck } from 'react-icons/fi';
 import InstructorAvatar from './InstructorAvatar';
 import './TopInstructors.css';
 
 const TopInstructors = () => {
+  const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const [selectedInstructor, setSelectedInstructor] = useState(null);
+  const [showExchangeModal, setShowExchangeModal] = useState(false);
+
+  const handleExchangeSkills = (instructor) => {
+    if (!isAuthenticated) {
+      navigate('/auth');
+      return;
+    }
+    setSelectedInstructor(instructor);
+    setShowExchangeModal(true);
+  };
+
+  const handleViewProfile = (instructor) => {
+    setSelectedInstructor(instructor);
+  };
+
+  const closeModal = () => {
+    setSelectedInstructor(null);
+    setShowExchangeModal(false);
+  };
+
+  const handleBookSession = () => {
+    // In a real app, this would integrate with a booking system
+    alert(`Session booking request sent to ${selectedInstructor?.name}! They will contact you soon.`);
+    closeModal();
+  };
 
   const instructors = [
     {
@@ -14,7 +44,7 @@ const TopInstructors = () => {
       title: 'Senior Data Scientist',
       company: 'Google AI',
       location: 'San Francisco, CA',
-      avatar: 'https://via.placeholder.com/150x150/5F9598/F3F4F4.png?text=SC',
+      avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face',
       rating: 4.9,
       students: 12500,
       courses: 8,
@@ -43,7 +73,7 @@ const TopInstructors = () => {
       title: 'Full Stack Developer',
       company: 'Meta',
       location: 'New York, NY',
-      avatar: 'https://via.placeholder.com/150x150/5F9598/F3F4F4.png?text=MR',
+      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face',
       rating: 4.8,
       students: 8900,
       courses: 12,
@@ -72,7 +102,7 @@ const TopInstructors = () => {
       title: 'Senior UX Designer',
       company: 'Apple',
       location: 'Cupertino, CA',
-      avatar: 'https://via.placeholder.com/150x150/5F9598/F3F4F4.png?text=EW',
+      avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face',
       rating: 4.9,
       students: 6700,
       courses: 6,
@@ -100,7 +130,7 @@ const TopInstructors = () => {
       title: 'Computer Science Professor',
       company: 'Stanford University',
       location: 'Palo Alto, CA',
-      avatar: 'https://via.placeholder.com/150x150/5F9598/F3F4F4.png?text=DK',
+      avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face',
       rating: 4.9,
       students: 15200,
       courses: 15,
@@ -128,7 +158,7 @@ const TopInstructors = () => {
       title: 'Digital Marketing Director',
       company: 'HubSpot',
       location: 'Boston, MA',
-      avatar: 'https://via.placeholder.com/150x150/5F9598/F3F4F4.png?text=LT',
+      avatar: 'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=150&h=150&fit=crop&crop=face',
       rating: 4.7,
       students: 9800,
       courses: 10,
@@ -156,7 +186,7 @@ const TopInstructors = () => {
       title: 'DevOps Engineer',
       company: 'Netflix',
       location: 'Los Angeles, CA',
-      avatar: 'https://via.placeholder.com/150x150/5F9598/F3F4F4.png?text=AH',
+      avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face',
       rating: 4.8,
       students: 5400,
       courses: 7,
@@ -388,6 +418,7 @@ const TopInstructors = () => {
               <div className="instructor-actions">
                 <motion.button
                   className="btn-primary"
+                  onClick={() => handleExchangeSkills(instructor)}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -395,6 +426,7 @@ const TopInstructors = () => {
                 </motion.button>
                 <motion.button
                   className="btn-secondary"
+                  onClick={() => handleViewProfile(instructor)}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -431,6 +463,229 @@ const TopInstructors = () => {
           </div>
         </motion.div>
       </div>
+
+      {/* Exchange Skills Modal */}
+      <AnimatePresence>
+        {showExchangeModal && selectedInstructor && (
+          <motion.div
+            className="modal-overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={closeModal}
+          >
+            <motion.div
+              className="exchange-modal"
+              initial={{ opacity: 0, scale: 0.8, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.8, y: 20 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button className="modal-close" onClick={closeModal}>
+                <FiX />
+              </button>
+              
+              <div className="modal-header">
+                <div className="instructor-info">
+                  <InstructorAvatar 
+                    src={selectedInstructor.avatar}
+                    alt={selectedInstructor.name}
+                    name={selectedInstructor.name}
+                  />
+                  <div>
+                    <h3>{selectedInstructor.name}</h3>
+                    <p>{selectedInstructor.title}</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="modal-content">
+                <h4>Exchange Skills with {selectedInstructor.name}</h4>
+                <p>Ready to learn from this expert? Here's what you can expect:</p>
+                
+                <div className="exchange-details">
+                  <div className="detail-item">
+                    <FiClock />
+                    <span>Rate: {selectedInstructor.creditsPerHour} credit per hour</span>
+                  </div>
+                  <div className="detail-item">
+                    <FiStar />
+                    <span>Rating: {selectedInstructor.rating}/5.0</span>
+                  </div>
+                  <div className="detail-item">
+                    <FiUsers />
+                    <span>Students: {selectedInstructor.students.toLocaleString()}</span>
+                  </div>
+                </div>
+
+                <div className="skills-section">
+                  <h5>Available Skills:</h5>
+                  <div className="skills-list">
+                    {selectedInstructor.skills.map((skill, index) => (
+                      <span key={index} className="skill-badge">
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="modal-actions">
+                  <motion.button
+                    className="btn-book-session"
+                    onClick={handleBookSession}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <FiCalendar />
+                    Book Learning Session
+                  </motion.button>
+                  <motion.button
+                    className="btn-cancel"
+                    onClick={closeModal}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    Cancel
+                  </motion.button>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* View Profile Modal */}
+      <AnimatePresence>
+        {selectedInstructor && !showExchangeModal && (
+          <motion.div
+            className="modal-overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={closeModal}
+          >
+            <motion.div
+              className="profile-modal"
+              initial={{ opacity: 0, scale: 0.8, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.8, y: 20 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button className="modal-close" onClick={closeModal}>
+                <FiX />
+              </button>
+              
+              <div className="profile-header">
+                <InstructorAvatar 
+                  src={selectedInstructor.avatar}
+                  alt={selectedInstructor.name}
+                  name={selectedInstructor.name}
+                />
+                <div className="profile-info">
+                  <h2>{selectedInstructor.name}</h2>
+                  <p className="profile-title">{selectedInstructor.title}</p>
+                  <p className="profile-company">{selectedInstructor.company}</p>
+                  <div className="profile-location">
+                    <FiMapPin />
+                    <span>{selectedInstructor.location}</span>
+                  </div>
+                  <div className="profile-rating">
+                    <FiStar />
+                    <span>{selectedInstructor.rating}/5.0 ({selectedInstructor.students.toLocaleString()} students)</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="profile-content">
+                <div className="profile-section">
+                  <h4>About</h4>
+                  <p>{selectedInstructor.bio}</p>
+                </div>
+
+                <div className="profile-section">
+                  <h4>Skills & Expertise</h4>
+                  <div className="skills-grid">
+                    {selectedInstructor.skills.map((skill, index) => (
+                      <span key={index} className="skill-tag">
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="profile-section">
+                  <h4>Key Achievements</h4>
+                  <ul className="achievements-list">
+                    {selectedInstructor.achievements.map((achievement, index) => (
+                      <li key={index}>
+                        <FiCheck />
+                        {achievement}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="profile-section">
+                  <h4>Teaching Details</h4>
+                  <div className="teaching-details">
+                    <div className="detail">
+                      <span className="label">Rate:</span>
+                      <span className="value">{selectedInstructor.creditsPerHour} credit/hour</span>
+                    </div>
+                    <div className="detail">
+                      <span className="label">Response Time:</span>
+                      <span className="value">{selectedInstructor.responseTime}</span>
+                    </div>
+                    <div className="detail">
+                      <span className="label">Languages:</span>
+                      <span className="value">{selectedInstructor.languages.join(', ')}</span>
+                    </div>
+                  </div>
+                </div>
+
+                {selectedInstructor.social && (
+                  <div className="profile-section">
+                    <h4>Connect</h4>
+                    <div className="social-links">
+                      {selectedInstructor.social.linkedin && (
+                        <a href={selectedInstructor.social.linkedin} target="_blank" rel="noopener noreferrer">
+                          <FiLinkedin />
+                          LinkedIn
+                        </a>
+                      )}
+                      {selectedInstructor.social.github && (
+                        <a href={selectedInstructor.social.github} target="_blank" rel="noopener noreferrer">
+                          <FiGithub />
+                          GitHub
+                        </a>
+                      )}
+                      {selectedInstructor.social.website && (
+                        <a href={selectedInstructor.social.website} target="_blank" rel="noopener noreferrer">
+                          <FiGlobe />
+                          Website
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                )}
+
+                <div className="profile-actions">
+                  <motion.button
+                    className="btn-exchange"
+                    onClick={() => {
+                      setShowExchangeModal(true);
+                    }}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    Exchange Skills
+                  </motion.button>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Background decorations */}
       <div className="instructors-bg">

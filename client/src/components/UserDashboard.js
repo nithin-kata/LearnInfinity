@@ -1,23 +1,44 @@
-import { motion } from 'framer-motion';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import { FiUser, FiCreditCard, FiTrendingUp, FiAward, FiLogOut, FiSettings } from 'react-icons/fi';
+import { FiUser, FiCreditCard, FiTrendingUp, FiAward, FiLogOut, FiSettings, FiX, FiCheck } from 'react-icons/fi';
 import './UserDashboard.css';
 
 const UserDashboard = () => {
   const { user, logout, isAuthenticated } = useAuth();
   const navigate = useNavigate();
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
 
   if (!isAuthenticated || !user) {
     return null;
   }
 
   const handleLogout = () => {
+    setShowLogoutConfirm(true);
+  };
+
+  const confirmLogout = () => {
     logout();
+    navigate('/');
+  };
+
+  const cancelLogout = () => {
+    setShowLogoutConfirm(false);
   };
 
   const handleViewProfile = () => {
     navigate('/profile');
+  };
+
+  const handleEarnCredit = () => {
+    // Navigate to a page where users can offer their skills to teach
+    navigate('/profile?tab=skills-offered');
+  };
+
+  const handleFindSkills = () => {
+    // Navigate to explore skills page
+    navigate('/explore-skills');
   };
 
   return (
@@ -92,6 +113,7 @@ const UserDashboard = () => {
       <div className="dashboard-actions">
         <motion.button
           className="action-btn primary"
+          onClick={handleFindSkills}
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
         >
@@ -99,12 +121,55 @@ const UserDashboard = () => {
         </motion.button>
         <motion.button
           className="action-btn secondary"
+          onClick={handleEarnCredit}
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
         >
-          Offer Your Skills
+          Earn Credit (Teach)
         </motion.button>
       </div>
+
+      {/* Logout Confirmation Modal */}
+      <AnimatePresence>
+        {showLogoutConfirm && (
+          <motion.div
+            className="logout-modal-overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={cancelLogout}
+          >
+            <motion.div
+              className="logout-modal"
+              initial={{ opacity: 0, scale: 0.8, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.8, y: 20 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <h3>Confirm Logout</h3>
+              <p>Are you sure you want to logout from your account?</p>
+              <div className="modal-actions">
+                <motion.button
+                  className="btn-confirm"
+                  onClick={confirmLogout}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <FiCheck /> Yes, Logout
+                </motion.button>
+                <motion.button
+                  className="btn-cancel-modal"
+                  onClick={cancelLogout}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <FiX /> Cancel
+                </motion.button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 };

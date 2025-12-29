@@ -1,11 +1,17 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { FiPlay, FiEye, FiThumbsUp, FiClock, FiTrendingUp, FiStar, FiX } from 'react-icons/fi';
 import './TrendingSkills.css';
 
 const TrendingSkills = () => {
+  const navigate = useNavigate();
   const [activeCategory, setActiveCategory] = useState('all');
   const [selectedVideo, setSelectedVideo] = useState(null);
+
+  const handleBecomeCreator = () => {
+    navigate('/auth');
+  };
 
   // Extract YouTube video ID from URL
   const extractVideoId = (url) => {
@@ -265,6 +271,7 @@ const TrendingSkills = () => {
           <p>Join our community of creators and start teaching what you love</p>
           <motion.button
             className="become-creator-btn"
+            onClick={handleBecomeCreator}
             whileHover={{ 
               scale: 1.05,
               boxShadow: "0 15px 30px rgba(177, 59, 255, 0.3)"

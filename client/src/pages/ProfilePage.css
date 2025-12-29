@@ -116,7 +116,8 @@
 
 .btn-edit,
 .btn-save,
-.btn-cancel {
+.btn-cancel,
+.btn-logout {
   padding: 0.75rem 1.5rem;
   border-radius: 10px;
   font-weight: 600;
@@ -146,15 +147,23 @@
   color: #ff6b6b;
 }
 
+.btn-logout {
+  background: rgba(244, 67, 54, 0.1);
+  border: 1px solid rgba(244, 67, 54, 0.3);
+  color: #ff6b6b;
+}
+
 .btn-edit:hover,
 .btn-save:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(95, 149, 152, 0.4);
 }
 
-.btn-cancel:hover {
+.btn-cancel:hover,
+.btn-logout:hover {
   background: rgba(244, 67, 54, 0.2);
   border-color: #ff6b6b;
+  transform: translateY(-2px);
 }
 
 /* Stats Cards */

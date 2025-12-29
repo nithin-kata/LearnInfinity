@@ -1,9 +1,15 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { FiUserPlus, FiSearch, FiCalendar, FiStar } from 'react-icons/fi';
 import './HowItWorks.css';
 
 const HowItWorks = () => {
+  const navigate = useNavigate();
+
+  const handleStartTrial = () => {
+    navigate('/auth');
+  };
   const steps = [
     {
       icon: FiUserPlus,
@@ -129,6 +135,7 @@ const HowItWorks = () => {
             </p>
             <motion.button
               className="demo-btn"
+              onClick={handleStartTrial}
               whileHover={{ 
                 scale: 1.05,
                 boxShadow: "0 15px 30px rgba(255, 215, 0, 0.3)"

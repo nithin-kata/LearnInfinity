@@ -7,6 +7,9 @@ require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+// Session tracking for credit deduction
+const activeSessions = new Map(); // userId -> { startTime, lastActivity, creditDeductionTimer }
+
 // Middleware
 app.use(cors());
 app.use(express.json());
@@ -25,6 +28,96 @@ const connectDB = async () => {
 
 // Connect to MongoDB
 connectDB();
+
+// Session management functions
+const startUserSession = (userId) => {
+  // Clear any existing session for this user
+  if (activeSessions.has(userId)) {
+    clearTimeout(activeSessions.get(userId).creditDeductionTimer);
+  }
+
+  const sessionData = {
+    startTime: new Date(),
+    lastActivity: new Date(),
+    creditDeductionTimer: null
+  };
+
+  // Set timer to deduct credit after 1 hour (3600000 ms)
+  sessionData.creditDeductionTimer = setTimeout(async () => {
+    try {
+      const User = require('./models/User');
+      const user = await User.findById(userId);
+      
+      if (user && user.credits > 0) {
+        user.credits -= 1;
+        user.totalHoursLearned += 1;
+        user.lastLogin = new Date();
+        await user.save();
+        
+        console.log(`Credit deducted for user ${userId}. Remaining credits: ${user.credits}`);
+        
+        // Start a new session cycle if user is still active
+        if (activeSessions.has(userId)) {
+          startUserSession(userId);
+        }
+      } else {
+        console.log(`User ${userId} has no credits left or user not found`);
+        endUserSession(userId);
+      }
+    } catch (error) {
+      console.error(`Error deducting credit for user ${userId}:`, error);
+    }
+  }, 3600000); // 1 hour = 3600000 milliseconds
+
+  activeSessions.set(userId, sessionData);
+  console.log(`Session started for user ${userId}`);
+};
+
+const updateUserActivity = (userId) => {
+  if (activeSessions.has(userId)) {
+    const sessionData = activeSessions.get(userId);
+    sessionData.lastActivity = new Date();
+    activeSessions.set(userId, sessionData);
+  }
+};
+
+const endUserSession = (userId) => {
+  if (activeSessions.has(userId)) {
+    const sessionData = activeSessions.get(userId);
+    if (sessionData.creditDeductionTimer) {
+      clearTimeout(sessionData.creditDeductionTimer);
+    }
+    activeSessions.delete(userId);
+    console.log(`Session ended for user ${userId}`);
+  }
+};
+
+// Middleware to track user activity
+const trackUserActivity = (req, res, next) => {
+  const token = req.header('Authorization')?.replace('Bearer ', '');
+  
+  if (token) {
+    try {
+      const jwt = require('jsonwebtoken');
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      const userId = decoded.userId;
+      
+      // Start session if not exists, update activity if exists
+      if (!activeSessions.has(userId)) {
+        startUserSession(userId);
+      } else {
+        updateUserActivity(userId);
+      }
+    } catch (error) {
+      // Invalid token, ignore
+    }
+  }
+  
+  next();
+};
+
+// Apply activity tracking middleware to all API routes
+app.use('/api', trackUserActivity);
 
 // API Routes
 app.use('/api/auth', require('./routes/auth'));
@@ -82,4 +175,27 @@ app.use('/api/*', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
   console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
+});
+
+// Graceful shutdown - cleanup active sessions
+process.on('SIGTERM', () => {
+  console.log('SIGTERM received, cleaning up active sessions...');
+  activeSessions.forEach((sessionData, userId) => {
+    if (sessionData.creditDeductionTimer) {
+      clearTimeout(sessionData.creditDeductionTimer);
+    }
+  });
+  activeSessions.clear();
+  process.exit(0);
+});
+
+process.on('SIGINT', () => {
+  console.log('SIGINT received, cleaning up active sessions...');
+  activeSessions.forEach((sessionData, userId) => {
+    if (sessionData.creditDeductionTimer) {
+      clearTimeout(sessionData.creditDeductionTimer);
+    }
+  });
+  activeSessions.clear();
+  process.exit(0);
 });

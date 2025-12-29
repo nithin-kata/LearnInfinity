@@ -353,3 +353,22 @@
     padding: 1.5rem;
   }
 }
+/* Disabled contact item styling */
+.contact-item.disabled {
+  opacity: 0.6;
+  cursor: default !important;
+}
+
+.contact-item.disabled .contact-icon {
+  color: #666 !important;
+}
+
+.contact-item.disabled .contact-value {
+  color: #999 !important;
+  font-style: italic;
+}
+
+.contact-item.disabled:hover {
+  transform: none !important;
+  scale: 1 !important;
+}

@@ -100,6 +100,46 @@ export const authAPI = {
     }
   },
 
+  // Deduct credit (hourly usage)
+  deductCredit: async () => {
+    try {
+      const response = await API.post('/auth/deduct-credit');
+      return response.data;
+    } catch (error) {
+      throw error.response?.data || { message: 'Failed to deduct credit' };
+    }
+  },
+
+  // Add credit (when teaching)
+  addCredit: async (hours = 1) => {
+    try {
+      const response = await API.post('/auth/add-credit', { hours });
+      return response.data;
+    } catch (error) {
+      throw error.response?.data || { message: 'Failed to add credit' };
+    }
+  },
+
+  // Start user session
+  startSession: async () => {
+    try {
+      const response = await API.post('/auth/start-session');
+      return response.data;
+    } catch (error) {
+      throw error.response?.data || { message: 'Failed to start session' };
+    }
+  },
+
+  // End user session
+  endSession: async () => {
+    try {
+      const response = await API.post('/auth/end-session');
+      return response.data;
+    } catch (error) {
+      throw error.response?.data || { message: 'Failed to end session' };
+    }
+  },
+
   // Logout user (client-side)
   logout: () => {
     localStorage.removeItem('token');

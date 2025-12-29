@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 import { motion, AnimatePresence } from 'framer-motion';
 import { AuthProvider } from './context/AuthContext';
 import Sidebar from './components/Sidebar';
+import Header from './components/Header';
 import HomePage from './pages/HomePage';
 import FeaturesPage from './pages/FeaturesPage';
 import HowItWorksPage from './pages/HowItWorksPage';
@@ -61,6 +62,7 @@ const AnimatedRoutes = () => {
   return (
     <>
       <Sidebar />
+      <Header />
       <main className="main-content">
         <AnimatePresence mode="wait">
           <Routes location={location} key={location.pathname}>

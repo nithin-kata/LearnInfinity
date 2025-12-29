@@ -69,6 +69,14 @@ export const AuthProvider = ({ children }) => {
         userUtils.setUser(userData);
         setUser(userData);
         setIsAuthenticated(true);
+        
+        // Start session for credit tracking
+        try {
+          await authAPI.startSession();
+        } catch (sessionError) {
+          console.error('Failed to start session:', sessionError);
+        }
+        
         return response;
       }
     } catch (error) {
@@ -96,7 +104,14 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const logout = () => {
+  const logout = async () => {
+    try {
+      // End session on server
+      await authAPI.endSession();
+    } catch (error) {
+      console.error('Failed to end session:', error);
+    }
+    
     tokenUtils.removeToken();
     userUtils.removeUser();
     setUser(null);

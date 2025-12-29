@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useAuth } from '../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { authAPI } from '../services/api';
 import { 
   FiUser, 
@@ -18,13 +18,15 @@ import {
   FiX,
   FiAward,
   FiClock,
-  FiTarget
+  FiTarget,
+  FiLogOut
 } from 'react-icons/fi';
 import './ProfilePage.css';
 
 const ProfilePage = () => {
-  const { user, isAuthenticated, updateUser } = useAuth();
+  const { user, isAuthenticated, updateUser, logout } = useAuth();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [isEditing, setIsEditing] = useState(false);
   const [editedUser, setEditedUser] = useState({});
   const [newSkill, setNewSkill] = useState({
@@ -49,7 +51,13 @@ const ProfilePage = () => {
         email: user.email
       });
     }
-  }, [isAuthenticated, user, navigate]);
+    
+    // Check for tab parameter in URL
+    const tabParam = searchParams.get('tab');
+    if (tabParam) {
+      setActiveTab(tabParam);
+    }
+  }, [isAuthenticated, user, navigate, searchParams]);
 
   if (!isAuthenticated || !user) {
     return null;
@@ -124,6 +132,11 @@ const ProfilePage = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
   };
 
   const containerVariants = {
@@ -232,14 +245,24 @@ const ProfilePage = () => {
                 </motion.button>
               </>
             ) : (
-              <motion.button
-                className="btn-edit"
-                onClick={handleEditToggle}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <FiEdit3 /> Edit Profile
-              </motion.button>
+              <>
+                <motion.button
+                  className="btn-edit"
+                  onClick={handleEditToggle}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <FiEdit3 /> Edit Profile
+                </motion.button>
+                <motion.button
+                  className="btn-logout"
+                  onClick={handleLogout}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <FiLogOut /> Logout
+                </motion.button>
+              </>
             )}
           </div>
         </motion.div>

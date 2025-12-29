@@ -463,4 +463,212 @@ router.delete('/skills/:type/:index', async (req, res) => {
   }
 });
 
+// @route   POST /api/auth/deduct-credit
+// @desc    Deduct one credit from user (hourly usage)
+// @access  Private
+router.post('/deduct-credit', async (req, res) => {
+  try {
+    // Get token from header
+    const token = req.header('Authorization')?.replace('Bearer ', '');
+    
+    if (!token) {
+      return res.status(401).json({
+        success: false,
+        message: 'No token provided'
+      });
+    }
+
+    // Verify token
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findById(decoded.userId);
+
+    if (!user) {
+      return res.status(401).json({
+        success: false,
+        message: 'User not found'
+      });
+    }
+
+    // Check if user has credits
+    if (user.credits <= 0) {
+      return res.status(400).json({
+        success: false,
+        message: 'Insufficient credits'
+      });
+    }
+
+    // Deduct one credit
+    user.credits -= 1;
+    user.totalHoursLearned += 1;
+    
+    // Update last activity
+    user.lastLogin = new Date();
+    
+    await user.save();
+
+    const userData = {
+      id: user._id,
+      name: user.name,
+      email: user.email,
+      credits: user.credits,
+      skillsOffered: user.skillsOffered,
+      skillsLearning: user.skillsLearning,
+      joinedDate: user.joinedDate,
+      lastLogin: user.lastLogin,
+      stats: user.getStats()
+    };
+
+    res.json({
+      success: true,
+      message: 'Credit deducted successfully',
+      user: userData,
+      hoursSpent: user.totalHoursLearned
+    });
+
+  } catch (error) {
+    console.error('Credit deduction error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Server error during credit deduction'
+    });
+  }
+});
+
+// @route   POST /api/auth/add-credit
+// @desc    Add credits to user (when teaching)
+// @access  Private
+router.post('/add-credit', async (req, res) => {
+  try {
+    // Get token from header
+    const token = req.header('Authorization')?.replace('Bearer ', '');
+    
+    if (!token) {
+      return res.status(401).json({
+        success: false,
+        message: 'No token provided'
+      });
+    }
+
+    // Verify token
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findById(decoded.userId);
+
+    if (!user) {
+      return res.status(401).json({
+        success: false,
+        message: 'User not found'
+      });
+    }
+
+    const { hours = 1 } = req.body;
+
+    // Add credits (1 credit per hour taught)
+    user.credits += hours;
+    user.totalHoursTaught += hours;
+    user.sessionsCompleted += 1;
+    
+    await user.save();
+
+    const userData = {
+      id: user._id,
+      name: user.name,
+      email: user.email,
+      credits: user.credits,
+      skillsOffered: user.skillsOffered,
+      skillsLearning: user.skillsLearning,
+      joinedDate: user.joinedDate,
+      lastLogin: user.lastLogin,
+      stats: user.getStats()
+    };
+
+    res.json({
+      success: true,
+      message: `${hours} credit(s) added successfully`,
+      user: userData,
+      creditsEarned: hours
+    });
+
+  } catch (error) {
+    console.error('Credit addition error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Server error during credit addition'
+    });
+  }
+});
+
+// @route   POST /api/auth/start-session
+// @desc    Start user session for credit tracking
+// @access  Private
+router.post('/start-session', async (req, res) => {
+  try {
+    // Get token from header
+    const token = req.header('Authorization')?.replace('Bearer ', '');
+    
+    if (!token) {
+      return res.status(401).json({
+        success: false,
+        message: 'No token provided'
+      });
+    }
+
+    // Verify token
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findById(decoded.userId);
+
+    if (!user) {
+      return res.status(401).json({
+        success: false,
+        message: 'User not found'
+      });
+    }
+
+    res.json({
+      success: true,
+      message: 'Session started successfully',
+      sessionStartTime: new Date(),
+      userCredits: user.credits
+    });
+
+  } catch (error) {
+    console.error('Session start error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Server error during session start'
+    });
+  }
+});
+
+// @route   POST /api/auth/end-session
+// @desc    End user session
+// @access  Private
+router.post('/end-session', async (req, res) => {
+  try {
+    // Get token from header
+    const token = req.header('Authorization')?.replace('Bearer ', '');
+    
+    if (!token) {
+      return res.status(401).json({
+        success: false,
+        message: 'No token provided'
+      });
+    }
+
+    // Verify token
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    
+    res.json({
+      success: true,
+      message: 'Session ended successfully'
+    });
+
+  } catch (error) {
+    console.error('Session end error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Server error during session end'
+    });
+  }
+});
+
 module.exports = router;
