@@ -1,144 +1,191 @@
-# LearnInfinity - Trade Skills, Not Cash
+# LearnInfinity ∞
 
-A modern, peer-to-peer skill exchange platform built with the MERN stack, featuring a stunning landing page with beautiful animations, an elegant infinity logo, and a sophisticated purple-to-yellow gradient color scheme.
+> **Trade Skills, Not Cash** - A modern MERN stack platform for skill sharing through credit-based exchanges
 
-## 🚀 Features
+![LearnInfinity](https://img.shields.io/badge/LearnInfinity-Skill%20Sharing%20Platform-teal)
+![MERN Stack](https://img.shields.io/badge/Stack-MERN-green)
+![Status](https://img.shields.io/badge/Status-Active%20Development-blue)
 
-- **Modern Design**: Elegant purple and yellow gradient color scheme with side navigation
-- **Elegant Logo**: Beautiful infinity symbol (∞) representing limitless learning
-- **Beautiful Animations**: Smooth Framer Motion animations throughout the interface
-- **Responsive Layout**: Fully responsive design that works on all devices
-- **Interactive Elements**: Hover effects, floating particles, and dynamic components
-- **Time-Based Credits**: Fair exchange system where 1 hour teaching = 1 hour learning
-- **Peer-to-Peer Learning**: Direct connections between learners and teachers
+## 🌟 Overview
+
+LearnInfinity is a comprehensive skill-sharing platform that revolutionizes how people learn and teach by implementing a credit-based economy instead of traditional monetary transactions. Users can offer their expertise in exchange for credits, which they can then use to learn new skills from other community members.
+
+### ✨ Key Features
+
+- 🎯 **Credit-Based System**: Trade skills using credits instead of money
+- 🚀 **Modern UI/UX**: Elegant design with smooth animations
+- 📱 **Responsive Design**: Works seamlessly on all devices
+- 🔐 **Secure Authentication**: JWT-based user authentication
+- ⏱️ **Automatic Session Tracking**: Smart credit deduction system
+- 🎓 **Skills Management**: Comprehensive skill offering and learning system
+- 👥 **Instructor Profiles**: Detailed instructor showcases with ratings
+- 🎬 **Embedded Video Learning**: In-platform video tutorials
+
+## 🛠️ Technology Stack
+
+### Frontend
+- **React 18** - Modern component-based UI
+- **React Router** - Client-side routing
+- **Framer Motion** - Smooth animations
+- **CSS3** - Custom styling with modern design
+
+### Backend
+- **Node.js** - Runtime environment
+- **Express.js** - Web application framework
+- **MongoDB** - NoSQL database
+- **Mongoose** - Object Document Mapper
+
+### Authentication & Security
+- **JWT** - JSON Web Tokens for authentication
+- **bcryptjs** - Password hashing
+- **CORS** - Cross-origin resource sharing
+
+## 🚀 Quick Start
+
+### Prerequisites
+- Node.js (v14 or higher)
+- MongoDB Atlas account
+- npm or yarn package manager
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone [repository-url]
+   cd learninfinity
+   ```
+
+2. **Install backend dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Install frontend dependencies**
+   ```bash
+   cd client
+   npm install
+   cd ..
+   ```
+
+4. **Environment Setup**
+   Create a `.env` file in the root directory:
+   ```env
+   MONGODB_URI=your_mongodb_connection_string
+   JWT_SECRET=your_jwt_secret_key
+   NODE_ENV=development
+   PORT=5000
+   ```
+
+5. **Start the development servers**
+   ```bash
+   # Start backend server (from root directory)
+   npm run dev
+   
+   # Start frontend server (in a new terminal)
+   cd client
+   npm start
+   ```
+
+6. **Access the application**
+   - Frontend: http://localhost:3000
+   - Backend API: http://localhost:5000
 
 ## 🎨 Design System
 
 ### Color Palette
-- **Deep Purple**: #090040 (Primary dark)
-- **Royal Purple**: #471396 (Secondary)
-- **Bright Purple**: #B13BFF (Accent)
-- **Golden Yellow**: #FFCC00 (Highlight)
+- **Primary Dark**: `#061E29` - Deep navy for headers and primary elements
+- **Primary Medium**: `#1D546D` - Teal for interactive elements
+- **Primary Light**: `#5F9598` - Light teal for accents
+- **Background**: `#F3F4F4` - Light gray for backgrounds
 
-### Logo Design
-- **Symbol**: Infinity (∞) representing endless learning possibilities
-- **Typography**: Modern split-level design with "Learn" and "Infinity"
-- **Colors**: Purple infinity symbol with yellow "Learn" text
+### Typography
+- Modern, clean fonts with excellent readability
+- Hierarchical text sizing for clear information architecture
 
-## 🛠 Tech Stack
+## 📊 Credit System
 
-- **Frontend**: React 18, Framer Motion, React Icons
-- **Backend**: Node.js, Express
-- **Styling**: Custom CSS with modern animations and gradients
-- **Fonts**: Inter & Poppins for modern typography
-- **Package Manager**: npm
+### How It Works
+- **New Users**: Receive 24 free credits upon registration
+- **Learning**: 1 credit deducted per hour of platform usage
+- **Teaching**: Earn credits by offering skills to other users
+- **Automatic Tracking**: Server-side session management with hourly deduction
 
-## 📁 Project Structure
+### Credit Management
+- Real-time credit balance updates
+- Transparent usage tracking
+- Earning opportunities through skill sharing
 
-```
-learninfinity/
-├── client/                 # React frontend
-│   ├── public/
-│   ├── src/
-│   │   ├── components/     # React components
-│   │   │   ├── Sidebar.js  # Side navigation with logo
-│   │   │   ├── Hero.js     # Hero section
-│   │   │   ├── Features.js # Features showcase
-│   │   │   ├── HowItWorks.js # Process explanation
-│   │   │   └── CTA.js      # Call to action & footer
-│   │   ├── App.js          # Main app component
-│   │   └── index.js        # Entry point
-├── server.js               # Express server
-└── package.json           # Server dependencies
-```
+## 🔧 API Endpoints
 
-## 🚀 Getting Started
+### Authentication
+- `POST /api/auth/register` - User registration
+- `POST /api/auth/login` - User login
+- `GET /api/auth/me` - Get user profile
+- `PUT /api/auth/profile` - Update profile
 
-### Prerequisites
-- Node.js (v14 or higher)
-- npm
+### Skills Management
+- `POST /api/auth/skills` - Add new skill
+- `DELETE /api/auth/skills/:type/:index` - Remove skill
 
-### Installation
+### Session Management
+- `POST /api/auth/start-session` - Start learning session
+- `POST /api/auth/end-session` - End session
+- `POST /api/auth/deduct-credit` - Manual credit deduction
 
-1. Clone the repository
-2. Install server dependencies:
-   ```bash
-   npm install
-   ```
+## 📱 Features Overview
 
-3. Install client dependencies:
-   ```bash
-   cd client
-   npm install
-   ```
+### 🏠 Homepage
+- Hero section with compelling call-to-actions
+- Feature highlights and benefits
+- "How It Works" explanation
+- Contact information and support
 
-### Running the Application
+### 🎓 Skills Exploration
+- Browse available skills by category
+- Embedded video tutorials
+- Skill difficulty levels and descriptions
+- Direct instructor contact
 
-#### Development Mode
-Start the React development server:
-```bash
-cd client
-npm start
-```
+### 👨‍🏫 Instructor Profiles
+- Detailed instructor information
+- Skills offered and expertise levels
+- Ratings and reviews
+- Direct booking system
 
-The application will open at `http://localhost:3000`
+### 👤 User Profile
+- Personal dashboard with statistics
+- Skills offered and learning management
+- Credit balance and usage history
+- Profile customization options
 
-#### Full Stack Mode
-To run both server and client:
-```bash
-npm run dev
-```
+## 🔐 Security Features
 
-## 📱 Responsive Design
+- Secure password hashing with bcrypt
+- JWT token-based authentication
+- Protected API routes
+- Input validation and sanitization
+- Session management and automatic cleanup
 
-The landing page is fully responsive with breakpoints for:
-- Desktop (1200px+)
-- Tablet (768px - 1199px)
-- Mobile (< 768px)
+## 📞 Contact & Support
 
-### Animations & Effects
-- Loading screen with rotating infinity logo
-- Floating purple particles background
-- Smooth gradient hover effects on cards and buttons
-- Staggered animations for content sections
-- Rotating decorative elements with purple accents
-- Gradient shimmer effects on interactive elements
-
-### Components
-1. **Sidebar Navigation**: Modern side-mounted navigation with elegant logo
-2. **Hero Section**: Eye-catching intro with animated skill cards
-3. **Features Grid**: Interactive feature cards with purple/yellow theme
-4. **How It Works**: Step-by-step process with gradient connecting animations
-5. **Call to Action**: Contact information and final conversion section
-
-## 🎯 Key Sections
-
-1. **Hero**: Compelling introduction with animated skill cards and gradient backgrounds
-2. **Features**: Six key platform benefits with interactive purple-themed cards
-3. **How It Works**: Four-step process explanation with gradient elements
-4. **Contact/CTA**: Contact information and final call-to-action with elegant styling
-
-## 🔧 Customization
-
-The design system uses CSS custom properties for easy theming. Key design elements include:
-- Purple to yellow gradient backgrounds
-- Infinity logo with customizable colors
-- Animation durations and easing functions
-- Spacing units and typography scales
-- Interactive hover states with gradient effects
-
-## 📄 License
-
-This project is licensed under the MIT License.
+- **Email**: learn@infinity.com
+- **Phone**: Coming soon
+- **Location**: Hyderabad, Telangana
 
 ## 🤝 Contributing
 
-1. Fork the repository
-2. Create a feature branch
-3. Commit your changes
-4. Push to the branch
-5. Open a Pull Request
+We welcome contributions to LearnInfinity! Please read our contributing guidelines and feel free to submit pull requests or open issues.
+
+## 📄 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## 🙏 Acknowledgments
+
+- Built with modern web technologies
+- Inspired by the sharing economy and skill exchange communities
+- Designed for seamless user experience and accessibility
 
 ---
 
-**LearnInfinity** - Empowering communities through infinite learning possibilities ∞
+**LearnInfinity** - Empowering skill sharing through innovative technology ∞

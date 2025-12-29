@@ -2,11 +2,12 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { FiUser, FiMail, FiLock, FiEye, FiEyeOff, FiArrowRight, FiArrowLeft, FiCheck } from 'react-icons/fi';
-import { authAPI, tokenUtils, userUtils } from '../services/api';
+import { useAuth } from '../context/AuthContext';
 import './AuthPage.css';
 
 const AuthPage = () => {
   const navigate = useNavigate();
+  const { login, register } = useAuth();
   const [isLogin, setIsLogin] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -81,17 +82,13 @@ const AuthPage = () => {
 
     try {
       if (isLogin) {
-        // Login
-        const response = await authAPI.login({
+        // Login using AuthContext
+        const response = await login({
           email: formData.email,
           password: formData.password
         });
 
         if (response.success) {
-          // Store token and user data
-          tokenUtils.setToken(response.token);
-          userUtils.setUser(response.user);
-          
           setSuccess('Login successful! Redirecting...');
           
           // Redirect to home page after a short delay
@@ -100,18 +97,14 @@ const AuthPage = () => {
           }, 1500);
         }
       } else {
-        // Register
-        const response = await authAPI.register({
+        // Register using AuthContext
+        const response = await register({
           name: formData.name,
           email: formData.email,
           password: formData.password
         });
 
         if (response.success) {
-          // Store token and user data
-          tokenUtils.setToken(response.token);
-          userUtils.setUser(response.user);
-          
           setSuccess(`Welcome to LearnInfinity! You've been awarded 24 free credits. Redirecting...`);
           
           // Redirect to home page after a short delay

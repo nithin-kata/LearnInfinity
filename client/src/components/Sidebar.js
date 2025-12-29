@@ -11,7 +11,7 @@ const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, user } = useAuth();
 
   const menuItems = [
     { id: '/', label: 'Home', icon: FiHome },
@@ -23,11 +23,10 @@ const Sidebar = () => {
   ];
 
   // Add profile link if user is authenticated
-  const authenticatedMenuItems = isAuthenticated 
+  const displayMenuItems = isAuthenticated 
     ? [
-        ...menuItems.slice(0, -1), // All items except contact
-        { id: '/profile', label: 'My Profile', icon: FiUser },
-        menuItems[menuItems.length - 1] // Contact at the end
+        ...menuItems,
+        { id: '/profile', label: 'My Profile', icon: FiUser }
       ]
     : menuItems;
 
@@ -113,7 +112,7 @@ const Sidebar = () => {
               }
             }}
           >
-            {authenticatedMenuItems.map((item) => {
+            {displayMenuItems.map((item) => {
               const Icon = item.icon;
               return (
                 <motion.li

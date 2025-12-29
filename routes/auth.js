@@ -76,6 +76,8 @@ router.post('/register', async (req, res) => {
       name: user.name,
       email: user.email,
       credits: user.credits,
+      skillsOffered: user.skillsOffered || [],
+      skillsLearning: user.skillsLearning || [],
       joinedDate: user.joinedDate,
       stats: user.getStats()
     };
@@ -168,6 +170,8 @@ router.post('/login', async (req, res) => {
       name: user.name,
       email: user.email,
       credits: user.credits,
+      skillsOffered: user.skillsOffered || [],
+      skillsLearning: user.skillsLearning || [],
       joinedDate: user.joinedDate,
       lastLogin: user.lastLogin,
       stats: user.getStats()
@@ -220,6 +224,8 @@ router.get('/me', async (req, res) => {
       name: user.name,
       email: user.email,
       credits: user.credits,
+      skillsOffered: user.skillsOffered || [],
+      skillsLearning: user.skillsLearning || [],
       joinedDate: user.joinedDate,
       lastLogin: user.lastLogin,
       stats: user.getStats()

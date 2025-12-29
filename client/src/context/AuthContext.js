@@ -16,6 +16,20 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
+  const logout = async () => {
+    try {
+      // End session on server
+      await authAPI.endSession();
+    } catch (error) {
+      console.error('Failed to end session:', error);
+    }
+    
+    tokenUtils.removeToken();
+    userUtils.removeUser();
+    setUser(null);
+    setIsAuthenticated(false);
+  };
+
   // Check if user is authenticated on app load
   useEffect(() => {
     const initializeAuth = async () => {
@@ -102,20 +116,6 @@ export const AuthProvider = ({ children }) => {
     } catch (error) {
       throw error;
     }
-  };
-
-  const logout = async () => {
-    try {
-      // End session on server
-      await authAPI.endSession();
-    } catch (error) {
-      console.error('Failed to end session:', error);
-    }
-    
-    tokenUtils.removeToken();
-    userUtils.removeUser();
-    setUser(null);
-    setIsAuthenticated(false);
   };
 
   const updateUser = (updatedUser) => {
