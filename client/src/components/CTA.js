@@ -8,8 +8,8 @@ const CTA = () => {
     {
       icon: FiMail,
       label: 'Email',
-      value: 'hello@skillswap.com',
-      link: 'mailto:hello@skillswap.com'
+      value: 'hello@learninfinity.com',
+      link: 'mailto:hello@learninfinity.com'
     },
     {
       icon: FiPhone,
@@ -177,11 +177,16 @@ const CTA = () => {
       >
         <div className="footer-content">
           <div className="footer-logo">
-            <span className="logo-skill">Skill</span>
-            <span className="logo-swap">Swap</span>
+            <div className="logo-container">
+              <div className="logo-icon">∞</div>
+              <div className="logo-text">
+                <span className="logo-skill">Learn</span>
+                <span className="logo-swap">Infinity</span>
+              </div>
+            </div>
           </div>
           <p className="footer-text">
-            © 2024 SkillSwap. All rights reserved. Trade Skills, Not Cash.
+            © 2024 LearnInfinity. All rights reserved. Trade Skills, Not Cash.
           </p>
         </div>
       </motion.footer>

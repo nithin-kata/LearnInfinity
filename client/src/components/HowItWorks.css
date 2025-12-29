@@ -1,6 +1,6 @@
 .how-it-works {
   padding: 8rem 0;
-  background: linear-gradient(180deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%);
+  background: linear-gradient(180deg, #090040 0%, #471396 50%, #090040 100%);
   position: relative;
   overflow: hidden;
 }
@@ -24,7 +24,7 @@
 }
 
 .how-it-works-title .highlight {
-  color: #FFD700;
+  color: #B13BFF;
   position: relative;
 }
 
@@ -35,7 +35,7 @@
   left: 0;
   width: 100%;
   height: 3px;
-  background: linear-gradient(90deg, #FFD700, #FFC107);
+  background: linear-gradient(90deg, #B13BFF, #FFCC00);
   border-radius: 2px;
 }
 
@@ -68,8 +68,8 @@
 }
 
 .step-card:hover {
-  border-color: rgba(255, 215, 0, 0.3);
-  box-shadow: 0 10px 30px rgba(255, 215, 0, 0.1);
+  border-color: rgba(177, 59, 255, 0.3);
+  box-shadow: 0 10px 30px rgba(177, 59, 255, 0.1);
 }
 
 .step-number {
@@ -79,19 +79,19 @@
   transform: translateX(-50%);
   width: 40px;
   height: 40px;
-  background: linear-gradient(135deg, #FFD700, #FFC107);
+  background: linear-gradient(135deg, #B13BFF, #FFCC00);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1rem;
   font-weight: 700;
-  color: #1a1a1a;
+  color: #090040;
 }
 
 .step-icon {
   font-size: 3rem;
-  color: #FFD700;
+  color: #B13BFF;
   margin: 1.5rem 0;
   display: inline-block;
 }
@@ -115,7 +115,7 @@
   right: -1rem;
   width: 2rem;
   height: 2px;
-  background: linear-gradient(90deg, #FFD700, transparent);
+  background: linear-gradient(90deg, #B13BFF, transparent);
   transform: translateY(-50%);
   transform-origin: left;
 }
@@ -151,10 +151,10 @@
 
 .demo-btn {
   padding: 1rem 2.5rem;
-  background: linear-gradient(135deg, #FFD700 0%, #FFC107 100%);
+  background: linear-gradient(135deg, #B13BFF 0%, #FFCC00 100%);
   border: none;
   border-radius: 50px;
-  color: #1a1a1a;
+  color: #090040;
   font-size: 1.1rem;
   font-weight: 600;
   cursor: pointer;
@@ -187,7 +187,7 @@
 .credit-counter {
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(15px);
-  border: 2px solid rgba(255, 215, 0, 0.3);
+  border: 2px solid rgba(177, 59, 255, 0.3);
   border-radius: 20px;
   padding: 2rem;
   text-align: center;
@@ -202,7 +202,7 @@
   left: -50%;
   width: 200%;
   height: 200%;
-  background: conic-gradient(from 0deg, transparent, rgba(255, 215, 0, 0.1), transparent);
+  background: conic-gradient(from 0deg, transparent, rgba(177, 59, 255, 0.1), transparent);
   animation: rotate 4s linear infinite;
 }
 
@@ -228,7 +228,7 @@
   display: block;
   font-size: 3rem;
   font-weight: 800;
-  color: #FFD700;
+  color: #FFCC00;
 }
 
 .how-it-works-bg {
@@ -243,7 +243,7 @@
 
 .bg-shape {
   position: absolute;
-  border: 1px solid rgba(255, 215, 0, 0.1);
+  border: 1px solid rgba(177, 59, 255, 0.1);
 }
 
 .bg-shape-1 {

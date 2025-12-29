@@ -1,6 +1,6 @@
 .features {
   padding: 8rem 0;
-  background: linear-gradient(180deg, #2d2d2d 0%, #1a1a1a 50%, #2d2d2d 100%);
+  background: linear-gradient(180deg, #471396 0%, #090040 50%, #471396 100%);
   position: relative;
   overflow: hidden;
 }
@@ -24,7 +24,7 @@
 }
 
 .features-title .highlight {
-  color: #FFD700;
+  color: #B13BFF;
   position: relative;
 }
 
@@ -35,7 +35,7 @@
   left: 0;
   width: 100%;
   height: 3px;
-  background: linear-gradient(90deg, #FFD700, #FFC107);
+  background: linear-gradient(90deg, #B13BFF, #FFCC00);
   border-radius: 2px;
 }
 
@@ -74,7 +74,7 @@
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.05), transparent);
+  background: linear-gradient(90deg, transparent, rgba(177, 59, 255, 0.05), transparent);
   transition: left 0.8s ease;
 }
 
@@ -119,10 +119,10 @@
 
 .features-btn {
   padding: 1rem 2.5rem;
-  background: linear-gradient(135deg, #FFD700 0%, #FFC107 100%);
+  background: linear-gradient(135deg, #B13BFF 0%, #FFCC00 100%);
   border: none;
   border-radius: 50px;
-  color: #1a1a1a;
+  color: #090040;
   font-size: 1.1rem;
   font-weight: 600;
   cursor: pointer;
@@ -158,7 +158,7 @@
 
 .bg-circle {
   position: absolute;
-  border: 2px solid rgba(255, 215, 0, 0.1);
+  border: 2px solid rgba(177, 59, 255, 0.1);
   border-radius: 50%;
 }
 

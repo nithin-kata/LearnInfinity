@@ -87,8 +87,13 @@ const Sidebar = ({ activeSection, setActiveSection }) => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
           >
-            <span className="logo-skill">Skill</span>
-            <span className="logo-swap">Swap</span>
+            <div className="logo-container">
+              <div className="logo-icon">∞</div>
+              <div className="logo-text">
+                <span className="logo-learn">Learn</span>
+                <span className="logo-infinity">Infinity</span>
+              </div>
+            </div>
           </motion.div>
 
           {/* Tagline */}

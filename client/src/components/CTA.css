@@ -1,6 +1,6 @@
 .cta {
   padding: 8rem 0 0 0;
-  background: linear-gradient(180deg, #2d2d2d 0%, #1a1a1a 100%);
+  background: linear-gradient(180deg, #471396 0%, #090040 100%);
   position: relative;
   overflow: hidden;
 }
@@ -29,7 +29,7 @@
 }
 
 .cta-title .highlight {
-  color: #FFD700;
+  color: #B13BFF;
   position: relative;
 }
 
@@ -40,7 +40,7 @@
   left: 0;
   width: 100%;
   height: 4px;
-  background: linear-gradient(90deg, #FFD700, #FFC107);
+  background: linear-gradient(90deg, #B13BFF, #FFCC00);
   border-radius: 2px;
 }
 
@@ -62,10 +62,10 @@
   align-items: center;
   gap: 0.5rem;
   padding: 1.2rem 2.5rem;
-  background: linear-gradient(135deg, #FFD700 0%, #FFC107 100%);
+  background: linear-gradient(135deg, #B13BFF 0%, #FFCC00 100%);
   border: none;
   border-radius: 50px;
-  color: #1a1a1a;
+  color: #090040;
   font-size: 1.1rem;
   font-weight: 600;
   cursor: pointer;
@@ -92,9 +92,9 @@
 .cta-btn-secondary {
   padding: 1.2rem 2.5rem;
   background: transparent;
-  border: 2px solid #FFD700;
+  border: 2px solid #B13BFF;
   border-radius: 50px;
-  color: #FFD700;
+  color: #B13BFF;
   font-size: 1.1rem;
   font-weight: 600;
   cursor: pointer;
@@ -102,7 +102,7 @@
 }
 
 .cta-btn-secondary:hover {
-  background: rgba(255, 215, 0, 0.1);
+  background: rgba(177, 59, 255, 0.1);
 }
 
 .btn-icon {
@@ -122,7 +122,7 @@
   display: block;
   font-size: 2rem;
   font-weight: 700;
-  color: #FFD700;
+  color: #FFCC00;
   margin-bottom: 0.5rem;
 }
 
@@ -174,19 +174,19 @@
 }
 
 .contact-item:hover {
-  background: rgba(255, 215, 0, 0.1);
-  border-color: rgba(255, 215, 0, 0.3);
+  background: rgba(177, 59, 255, 0.1);
+  border-color: rgba(177, 59, 255, 0.3);
 }
 
 .contact-icon {
   width: 50px;
   height: 50px;
-  background: linear-gradient(135deg, #FFD700, #FFC107);
+  background: linear-gradient(135deg, #B13BFF, #FFCC00);
   border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #1a1a1a;
+  color: #090040;
   font-size: 1.2rem;
 }
 
@@ -223,16 +223,41 @@
 }
 
 .footer-logo {
+  display: flex;
+  align-items: center;
+}
+
+.footer-logo .logo-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.footer-logo .logo-icon {
   font-size: 1.5rem;
   font-weight: 800;
+  color: #B13BFF;
+}
+
+.footer-logo .logo-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .footer-logo .logo-skill {
-  color: #FFD700;
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #FFCC00;
+  line-height: 1;
+  margin-bottom: -0.1rem;
 }
 
 .footer-logo .logo-swap {
-  color: #ffffff;
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #B13BFF;
+  line-height: 1;
 }
 
 .footer-text {
@@ -253,7 +278,7 @@
 .bg-gradient {
   position: absolute;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(255, 215, 0, 0.1) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(177, 59, 255, 0.1) 0%, transparent 70%);
 }
 
 .bg-gradient-1 {

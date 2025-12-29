@@ -9,37 +9,37 @@ const Features = () => {
       icon: FiClock,
       title: 'Time-Based Credits',
       description: 'Fair exchange system where 1 hour of teaching equals 1 hour of learning credits.',
-      color: '#FFD700'
+      color: '#FFCC00'
     },
     {
       icon: FiUsers,
       title: 'Peer-to-Peer Learning',
       description: 'Connect directly with skilled individuals in your community and beyond.',
-      color: '#FF6B6B'
+      color: '#B13BFF'
     },
     {
       icon: FiTrendingUp,
       title: 'Skill Progression',
       description: 'Track your learning journey and build a comprehensive skill portfolio.',
-      color: '#4ECDC4'
+      color: '#471396'
     },
     {
       icon: FiShield,
       title: 'Verified Instructors',
       description: 'All instructors are verified through our comprehensive review system.',
-      color: '#45B7D1'
+      color: '#B13BFF'
     },
     {
       icon: FiZap,
       title: 'Instant Matching',
       description: 'AI-powered matching system connects you with the perfect learning partner.',
-      color: '#96CEB4'
+      color: '#FFCC00'
     },
     {
       icon: FiHeart,
       title: 'Community Driven',
       description: 'Join a supportive community of lifelong learners and passionate teachers.',
-      color: '#FFEAA7'
+      color: '#471396'
     }
   ];
 
@@ -77,7 +77,7 @@ const Features = () => {
           viewport={{ once: true }}
         >
           <h2 className="features-title">
-            Why Choose <span className="highlight">SkillSwap</span>?
+            Why Choose <span className="highlight">LearnInfinity</span>?
           </h2>
           <p className="features-subtitle">
             Experience the future of learning with our innovative platform designed for modern learners
@@ -100,7 +100,7 @@ const Features = () => {
                 variants={itemVariants}
                 whileHover={{ 
                   scale: 1.05,
-                  boxShadow: `0 20px 40px rgba(${feature.color === '#FFD700' ? '255, 215, 0' : '255, 255, 255'}, 0.1)`
+                  boxShadow: `0 20px 40px rgba(177, 59, 255, 0.1)`
                 }}
                 whileTap={{ scale: 0.95 }}
               >

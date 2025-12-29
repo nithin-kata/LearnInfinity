@@ -4,15 +4,15 @@
   top: 20px;
   left: 20px;
   z-index: 1001;
-  background: #FFD700;
+  background: linear-gradient(135deg, #B13BFF 0%, #FFCC00 100%);
   border: none;
   border-radius: 8px;
   width: 50px;
   height: 50px;
-  color: #1a1a1a;
+  color: #090040;
   font-size: 1.5rem;
   cursor: pointer;
-  box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+  box-shadow: 0 4px 15px rgba(177, 59, 255, 0.3);
 }
 
 .sidebar {
@@ -21,8 +21,8 @@
   left: 0;
   width: 280px;
   height: 100vh;
-  background: linear-gradient(180deg, #1a1a1a 0%, #2d2d2d 100%);
-  border-right: 2px solid #FFD700;
+  background: linear-gradient(180deg, #090040 0%, #471396 100%);
+  border-right: 2px solid #B13BFF;
   z-index: 1000;
   overflow: hidden;
 }
@@ -37,18 +37,43 @@
 }
 
 .logo {
-  font-size: 2.5rem;
-  font-weight: 800;
   text-align: center;
   margin-bottom: 0.5rem;
 }
 
-.logo-skill {
-  color: #FFD700;
+.logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
 }
 
-.logo-swap {
-  color: #ffffff;
+.logo-icon {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #B13BFF;
+  text-shadow: 0 0 15px rgba(177, 59, 255, 0.5);
+}
+
+.logo-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.logo-learn {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #FFCC00;
+  line-height: 1;
+  margin-bottom: -0.1rem;
+}
+
+.logo-infinity {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #B13BFF;
+  line-height: 1;
 }
 
 .tagline {
@@ -89,7 +114,7 @@
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.1), transparent);
+  background: linear-gradient(90deg, transparent, rgba(177, 59, 255, 0.1), transparent);
   transition: left 0.5s ease;
 }
 
@@ -98,15 +123,15 @@
 }
 
 .nav-item:hover {
-  background: rgba(255, 215, 0, 0.1);
-  color: #FFD700;
+  background: rgba(177, 59, 255, 0.1);
+  color: #B13BFF;
   transform: translateX(5px);
 }
 
 .nav-item.active {
-  background: rgba(255, 215, 0, 0.15);
-  color: #FFD700;
-  border-left: 4px solid #FFD700;
+  background: rgba(177, 59, 255, 0.15);
+  color: #B13BFF;
+  border-left: 4px solid #B13BFF;
 }
 
 .nav-icon {
@@ -121,10 +146,10 @@
 .cta-button {
   width: 100%;
   padding: 1rem;
-  background: linear-gradient(135deg, #FFD700 0%, #FFC107 100%);
+  background: linear-gradient(135deg, #B13BFF 0%, #FFCC00 100%);
   border: none;
   border-radius: 12px;
-  color: #1a1a1a;
+  color: #090040;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
@@ -160,7 +185,7 @@
 .decoration-circle {
   width: 100%;
   height: 100%;
-  border: 2px solid rgba(255, 215, 0, 0.2);
+  border: 2px solid rgba(177, 59, 255, 0.2);
   border-radius: 50%;
 }
 

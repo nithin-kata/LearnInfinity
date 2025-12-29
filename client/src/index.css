@@ -10,7 +10,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+  background: linear-gradient(135deg, #090040 0%, #471396 50%, #090040 100%);
   color: #ffffff;
   overflow-x: hidden;
 }
@@ -25,14 +25,14 @@ code {
 }
 
 ::-webkit-scrollbar-track {
-  background: #1a1a1a;
+  background: #090040;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #FFD700;
+  background: #B13BFF;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #FFC107;
+  background: #FFCC00;
 }

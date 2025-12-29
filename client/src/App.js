@@ -41,8 +41,13 @@ function App() {
                 ease: "easeInOut"
               }}
             >
-              <span className="skill">Skill</span>
-              <span className="swap">Swap</span>
+              <div className="logo-container">
+                <div className="logo-icon">∞</div>
+                <div className="logo-text">
+                  <span className="learn">Learn</span>
+                  <span className="infinity">Infinity</span>
+                </div>
+              </div>
             </motion.div>
           </motion.div>
         )}

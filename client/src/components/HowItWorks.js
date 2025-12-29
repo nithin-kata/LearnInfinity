@@ -65,7 +65,7 @@ const HowItWorks = () => {
           viewport={{ once: true }}
         >
           <h2 className="how-it-works-title">
-            How <span className="highlight">SkillSwap</span> Works
+            How <span className="highlight">LearnInfinity</span> Works
           </h2>
           <p className="how-it-works-subtitle">
             Get started in just 4 simple steps and begin your learning journey today

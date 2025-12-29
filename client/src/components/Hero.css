@@ -4,7 +4,7 @@
   align-items: center;
   position: relative;
   overflow: hidden;
-  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%);
+  background: linear-gradient(135deg, #090040 0%, #471396 50%, #090040 100%);
 }
 
 .hero-background {
@@ -26,7 +26,7 @@
   position: absolute;
   width: 3px;
   height: 3px;
-  background: #FFD700;
+  background: #B13BFF;
   border-radius: 50%;
   filter: blur(0.5px);
 }
@@ -49,13 +49,13 @@
 
 .hero-badge {
   display: inline-block;
-  background: rgba(255, 215, 0, 0.1);
-  border: 1px solid rgba(255, 215, 0, 0.3);
+  background: rgba(177, 59, 255, 0.1);
+  border: 1px solid rgba(177, 59, 255, 0.3);
   border-radius: 50px;
   padding: 0.5rem 1.5rem;
   margin-bottom: 2rem;
   font-size: 0.9rem;
-  color: #FFD700;
+  color: #B13BFF;
   font-weight: 500;
 }
 
@@ -68,7 +68,7 @@
 }
 
 .highlight {
-  color: #FFD700;
+  color: #B13BFF;
   position: relative;
 }
 
@@ -79,13 +79,13 @@
   left: 0;
   width: 100%;
   height: 4px;
-  background: linear-gradient(90deg, #FFD700, #FFC107);
+  background: linear-gradient(90deg, #B13BFF, #FFCC00);
   border-radius: 2px;
 }
 
 .highlight-secondary {
   color: #ffffff;
-  background: linear-gradient(135deg, #FFD700, #FFC107);
+  background: linear-gradient(135deg, #B13BFF, #FFCC00);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -113,7 +113,7 @@
   display: block;
   font-size: 2rem;
   font-weight: 700;
-  color: #FFD700;
+  color: #FFCC00;
   margin-bottom: 0.5rem;
 }
 
@@ -134,10 +134,10 @@
   align-items: center;
   gap: 0.5rem;
   padding: 1rem 2rem;
-  background: linear-gradient(135deg, #FFD700 0%, #FFC107 100%);
+  background: linear-gradient(135deg, #B13BFF 0%, #FFCC00 100%);
   border: none;
   border-radius: 12px;
-  color: #1a1a1a;
+  color: #090040;
   font-size: 1.1rem;
   font-weight: 600;
   cursor: pointer;
@@ -167,9 +167,9 @@
   gap: 0.5rem;
   padding: 1rem 2rem;
   background: transparent;
-  border: 2px solid #FFD700;
+  border: 2px solid #B13BFF;
   border-radius: 12px;
-  color: #FFD700;
+  color: #B13BFF;
   font-size: 1.1rem;
   font-weight: 600;
   cursor: pointer;
@@ -177,7 +177,7 @@
 }
 
 .btn-secondary:hover {
-  background: rgba(255, 215, 0, 0.1);
+  background: rgba(177, 59, 255, 0.1);
 }
 
 .btn-icon {
@@ -200,7 +200,7 @@
   padding: 1.5rem;
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 215, 0, 0.2);
+  border: 1px solid rgba(177, 59, 255, 0.2);
   border-radius: 16px;
   text-align: center;
   cursor: pointer;
@@ -241,8 +241,8 @@
 }
 
 .card-credits {
-  background: linear-gradient(135deg, #FFD700, #FFC107);
-  color: #1a1a1a;
+  background: linear-gradient(135deg, #B13BFF, #FFCC00);
+  color: #090040;
   padding: 0.5rem 1rem;
   border-radius: 20px;
   font-size: 0.8rem;
@@ -260,7 +260,7 @@
 .flow-line {
   width: 300px;
   height: 2px;
-  background: linear-gradient(90deg, transparent, #FFD700, transparent);
+  background: linear-gradient(90deg, transparent, #B13BFF, transparent);
   position: relative;
 }
 
@@ -271,7 +271,7 @@
   left: 0;
   width: 20px;
   height: 4px;
-  background: #FFD700;
+  background: #B13BFF;
   border-radius: 2px;
   animation: flow 2s ease-in-out infinite;
 }
@@ -287,12 +287,12 @@
   top: -30px;
   left: 50%;
   transform: translateX(-50%);
-  background: rgba(255, 215, 0, 0.1);
-  border: 1px solid rgba(255, 215, 0, 0.3);
+  background: rgba(177, 59, 255, 0.1);
+  border: 1px solid rgba(177, 59, 255, 0.3);
   border-radius: 20px;
   padding: 0.5rem 1rem;
   font-size: 0.8rem;
-  color: #FFD700;
+  color: #B13BFF;
   font-weight: 500;
   white-space: nowrap;
 }
