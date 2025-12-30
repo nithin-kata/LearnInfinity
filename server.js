@@ -2,7 +2,15 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const path = require('path');
+const fs = require('fs');
+
+// Load environment variables
 require('dotenv').config();
+
+// Alternative way to load .env in production
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config({ path: path.join(__dirname, '.env') });
+}
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -18,10 +26,30 @@ app.use(express.urlencoded({ extended: true }));
 // MongoDB Connection
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect(process.env.MONGODB_URI);
+    // Debug: Log environment variables
+    console.log('Environment check:');
+    console.log('NODE_ENV:', process.env.NODE_ENV);
+    console.log('MONGODB_URI exists:', !!process.env.MONGODB_URI);
+    console.log('MONGODB_URI length:', process.env.MONGODB_URI ? process.env.MONGODB_URI.length : 0);
+    console.log('MONGODB_URI first 20 chars:', process.env.MONGODB_URI ? process.env.MONGODB_URI.substring(0, 20) : 'undefined');
+    
+    let mongoUri;
+    
+    if (process.env.MONGODB_URI && process.env.MONGODB_URI.startsWith('mongodb')) {
+      mongoUri = process.env.MONGODB_URI;
+    } else {
+      // Fallback: construct from individual components or use hardcoded for production
+      console.log('Using fallback MongoDB URI construction');
+      mongoUri = `mongodb+srv://${process.env.DB_USER || 'nithinkata5_db_user'}:${process.env.DB_PASS || 'oDiVQ0r5ehEmAXfp'}@${process.env.DB_HOST || 'cluster0.7oubdv2.mongodb.net'}/${process.env.DB_NAME || 'learninfinity'}?retryWrites=true&w=majority`;
+    }
+    
+    console.log('Attempting to connect with URI starting with:', mongoUri.substring(0, 20));
+    
+    const conn = await mongoose.connect(mongoUri);
     console.log(`MongoDB Connected: ${conn.connection.host}`);
   } catch (error) {
     console.error('MongoDB connection error:', error.message);
+    console.error('Full error:', error);
     process.exit(1);
   }
 };
@@ -147,10 +175,42 @@ app.get('/api', (req, res) => {
 
 // Serve static files from React build
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, 'client/build')));
+  const buildPath = path.join(__dirname, 'client/build');
   
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+  // Check if build directory exists
+  const fs = require('fs');
+  if (fs.existsSync(buildPath)) {
+    console.log('Serving static files from:', buildPath);
+    app.use(express.static(buildPath));
+    
+    app.get('*', (req, res) => {
+      const indexPath = path.join(buildPath, 'index.html');
+      if (fs.existsSync(indexPath)) {
+        res.sendFile(indexPath);
+      } else {
+        res.status(404).json({ 
+          error: 'Frontend build not found',
+          message: 'The React app has not been built yet. Please run the build process.'
+        });
+      }
+    });
+  } else {
+    console.log('Build directory not found:', buildPath);
+    app.get('*', (req, res) => {
+      res.status(404).json({ 
+        error: 'Frontend not built',
+        message: 'The React app build directory does not exist. Please run the build process.',
+        buildPath: buildPath
+      });
+    });
+  }
+} else {
+  // Development mode - just serve API
+  app.get('/', (req, res) => {
+    res.json({ 
+      message: 'LearnInfinity API Server - Development Mode',
+      note: 'Frontend should be running on port 3000'
+    });
   });
 }
 
