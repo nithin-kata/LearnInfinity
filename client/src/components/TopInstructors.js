@@ -224,29 +224,6 @@ const TopInstructors = () => {
     ? instructors 
     : instructors.filter(instructor => instructor.category === selectedCategory);
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2
-      }
-    }
-  };
-
-  const cardVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut"
-      }
-    }
-  };
-
   return (
     <section id="top-instructors" className="top-instructors">
       <div className="instructors-container">
@@ -291,21 +268,28 @@ const TopInstructors = () => {
         {/* Instructors Grid */}
         <motion.div
           className="instructors-grid"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
+          key={selectedCategory} // Force re-render when category changes
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3 }}
         >
-          {filteredInstructors.map((instructor) => (
-            <motion.div
-              key={instructor.id}
-              className="instructor-card"
-              variants={cardVariants}
-              whileHover={{ 
-                scale: 1.02,
-                boxShadow: "0 20px 40px rgba(95, 149, 152, 0.15)"
-              }}
-            >
+          {filteredInstructors.length === 0 ? (
+            <div className="no-instructors-message">
+              <p>No instructors found for the selected category.</p>
+            </div>
+          ) : (
+            filteredInstructors.map((instructor) => (
+              <motion.div
+                key={instructor.id}
+                className="instructor-card"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.1 }}
+                whileHover={{ 
+                  scale: 1.02,
+                  boxShadow: "0 20px 40px rgba(95, 149, 152, 0.15)"
+                }}
+              >
               <div className="instructor-header">
                 <div className="instructor-avatar">
                   <InstructorAvatar 
@@ -434,7 +418,8 @@ const TopInstructors = () => {
                 </motion.button>
               </div>
             </motion.div>
-          ))}
+          ))
+          )}
         </motion.div>
 
         {/* Stats Section */}

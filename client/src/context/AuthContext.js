@@ -94,7 +94,17 @@ export const AuthProvider = ({ children }) => {
         return response;
       }
     } catch (error) {
-      throw error;
+      console.error('Login error:', error);
+      // Provide more specific error messages
+      if (error.response?.status === 500) {
+        throw new Error('Server error. Please try again later.');
+      } else if (error.response?.status === 401) {
+        throw new Error('Invalid email or password.');
+      } else if (error.message) {
+        throw new Error(error.message);
+      } else {
+        throw new Error('Unable to connect to server. Please check your internet connection.');
+      }
     }
   };
 
@@ -114,7 +124,17 @@ export const AuthProvider = ({ children }) => {
         return response;
       }
     } catch (error) {
-      throw error;
+      console.error('Registration error:', error);
+      // Provide more specific error messages
+      if (error.response?.status === 500) {
+        throw new Error('Server error. Please try again later.');
+      } else if (error.response?.status === 400) {
+        throw new Error(error.message || 'Registration failed. Please check your information.');
+      } else if (error.message) {
+        throw new Error(error.message);
+      } else {
+        throw new Error('Unable to connect to server. Please check your internet connection.');
+      }
     }
   };
 

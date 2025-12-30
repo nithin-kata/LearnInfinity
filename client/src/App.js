@@ -12,6 +12,8 @@ import TopInstructorsPage from './pages/TopInstructorsPage';
 import ContactPage from './pages/ContactPage';
 import AuthPage from './pages/AuthPage';
 import ProfilePage from './pages/ProfilePage';
+import BecomeCreatorPage from './pages/BecomeCreatorPage';
+import CreatorDashboardPage from './pages/CreatorDashboardPage';
 import './App.css';
 
 const AnimatedRoutes = () => {
@@ -141,6 +143,28 @@ const AnimatedRoutes = () => {
                 transition={pageTransition}
               >
                 <ProfilePage />
+              </motion.div>
+            } />
+            <Route path="/become-creator" element={
+              <motion.div
+                initial="initial"
+                animate="in"
+                exit="out"
+                variants={pageVariants}
+                transition={pageTransition}
+              >
+                <BecomeCreatorPage />
+              </motion.div>
+            } />
+            <Route path="/creator-dashboard" element={
+              <motion.div
+                initial="initial"
+                animate="in"
+                exit="out"
+                variants={pageVariants}
+                transition={pageTransition}
+              >
+                <CreatorDashboardPage />
               </motion.div>
             } />
           </Routes>

@@ -104,6 +104,14 @@
   margin-bottom: 4rem;
 }
 
+.no-instructors-message {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 3rem;
+  color: #cccccc;
+  font-size: 1.1rem;
+}
+
 .instructor-card {
   background: rgba(243, 244, 244, 0.05);
   backdrop-filter: blur(10px);

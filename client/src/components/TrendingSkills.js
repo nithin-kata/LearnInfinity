@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { createPortal } from 'react-dom';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { FiPlay, FiEye, FiThumbsUp, FiClock, FiTrendingUp, FiStar, FiX } from 'react-icons/fi';
@@ -11,6 +12,10 @@ const TrendingSkills = () => {
 
   const handleBecomeCreator = () => {
     navigate('/auth');
+  };
+
+  const handleCategoryChange = (categoryId) => {
+    setActiveCategory(categoryId);
   };
 
   // Extract YouTube video ID from URL
@@ -109,29 +114,6 @@ const TrendingSkills = () => {
     ? trendingVideos 
     : trendingVideos.filter(video => video.category === activeCategory);
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut"
-      }
-    }
-  };
-
   const handleVideoClick = (video) => {
     setSelectedVideo(video);
   };
@@ -169,16 +151,21 @@ const TrendingSkills = () => {
         >
           {categories.map((category) => {
             const Icon = category.icon;
+            const categoryCount = category.id === 'all' 
+              ? trendingVideos.length 
+              : trendingVideos.filter(video => video.category === category.id).length;
+            
             return (
               <motion.button
                 key={category.id}
                 className={`category-btn ${activeCategory === category.id ? 'active' : ''}`}
-                onClick={() => setActiveCategory(category.id)}
+                onClick={() => handleCategoryChange(category.id)}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
                 <Icon className="category-icon" />
                 {category.label}
+                <span className="category-count">({categoryCount})</span>
               </motion.button>
             );
           })}
@@ -187,76 +174,84 @@ const TrendingSkills = () => {
         {/* Videos Grid */}
         <motion.div
           className="videos-grid"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
+          key={activeCategory} // Force re-render when category changes
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3 }}
         >
-          {filteredVideos.map((video) => (
-            <motion.div
-              key={video.id}
-              className="video-card"
-              variants={itemVariants}
-              whileHover={{ 
-                scale: 1.02,
-                boxShadow: "0 20px 40px rgba(177, 59, 255, 0.15)"
-              }}
-              onClick={() => handleVideoClick(video)}
-            >
-              {video.trending && (
-                <div className="trending-badge">
-                  <FiTrendingUp />
-                  Trending
-                </div>
-              )}
-
-              <div className="video-thumbnail">
-                <img src={`https://img.youtube.com/vi/${video.videoId}/maxresdefault.jpg`} alt={video.title} />
-                <div className="play-overlay">
-                  <motion.div
-                    className="play-button"
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                  >
-                    <FiPlay />
-                  </motion.div>
-                </div>
-                <div className="video-duration">
-                  <FiClock />
-                  {video.duration}
-                </div>
-              </div>
-
-              <div className="video-content">
-                <h3 className="video-title">{video.title}</h3>
-                <p className="video-creator">by {video.creator}</p>
-                <p className="video-description">{video.description}</p>
-
-                <div className="video-tags">
-                  {video.tags.map((tag, index) => (
-                    <span key={index} className="video-tag">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-
-                <div className="video-stats">
-                  <div className="stat">
-                    <FiEye />
-                    <span>{video.views} views</span>
+          {filteredVideos.length === 0 ? (
+            <div className="no-videos-message">
+              <p>No videos found for the selected category.</p>
+            </div>
+          ) : (
+            filteredVideos.map((video) => (
+              <motion.div
+                key={video.id}
+                className="video-card"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.1 }}
+                whileHover={{ 
+                  scale: 1.02,
+                  boxShadow: "0 20px 40px rgba(177, 59, 255, 0.15)"
+                }}
+                onClick={() => handleVideoClick(video)}
+              >
+                {video.trending && (
+                  <div className="trending-badge">
+                    <FiTrendingUp />
+                    Trending
                   </div>
-                  <div className="stat">
-                    <FiThumbsUp />
-                    <span>{video.likes}</span>
+                )}
+
+                <div className="video-thumbnail">
+                  <img src={`https://img.youtube.com/vi/${video.videoId}/maxresdefault.jpg`} alt={video.title} />
+                  <div className="play-overlay">
+                    <motion.div
+                      className="play-button"
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
+                    >
+                      <FiPlay />
+                    </motion.div>
                   </div>
-                  <div className="stat rating">
-                    <FiStar />
-                    <span>{video.rating}</span>
+                  <div className="video-duration">
+                    <FiClock />
+                    {video.duration}
                   </div>
                 </div>
-              </div>
-            </motion.div>
-          ))}
+
+                <div className="video-content">
+                  <h3 className="video-title">{video.title}</h3>
+                  <p className="video-creator">by {video.creator}</p>
+                  <p className="video-description">{video.description}</p>
+
+                  <div className="video-tags">
+                    {video.tags.map((tag, index) => (
+                      <span key={index} className="video-tag">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div className="video-stats">
+                    <div className="stat">
+                      <FiEye />
+                      <span>{video.views} views</span>
+                    </div>
+                    <div className="stat">
+                      <FiThumbsUp />
+                      <span>{video.likes}</span>
+                    </div>
+                    <div className="stat rating">
+                      <FiStar />
+                      <span>{video.rating}</span>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            ))
+          )}
         </motion.div>
 
         {/* Call to Action */}
@@ -284,7 +279,7 @@ const TrendingSkills = () => {
       </div>
 
       {/* Embedded Video Player Modal */}
-      {selectedVideo && (
+      {selectedVideo && createPortal(
         <motion.div
           className="video-modal-overlay"
           initial={{ opacity: 0 }}
@@ -306,7 +301,7 @@ const TrendingSkills = () => {
               <iframe
                 src={`https://www.youtube.com/embed/${selectedVideo.videoId}?autoplay=1&rel=0`}
                 title={selectedVideo.title}
-                frameBorder="0"
+                style={{ border: 'none' }}
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
               ></iframe>
@@ -322,7 +317,8 @@ const TrendingSkills = () => {
               </div>
             </div>
           </motion.div>
-        </motion.div>
+        </motion.div>,
+        document.body
       )}
 
       {/* Background decorations */}

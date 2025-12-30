@@ -2,8 +2,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { FiHome, FiStar, FiUsers, FiCompass, FiAward, FiMessageCircle, FiMenu, FiX, FiUser } from 'react-icons/fi';
-import UserDashboard from './UserDashboard';
+import { FiHome, FiStar, FiUsers, FiCompass, FiAward, FiMessageCircle, FiMenu, FiX, FiUser, FiVideo } from 'react-icons/fi';
 import LogoutButton from './LogoutButton';
 import './Sidebar.css';
 
@@ -11,7 +10,7 @@ const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-  const { isAuthenticated, user } = useAuth();
+  const { isAuthenticated } = useAuth();
 
   const menuItems = [
     { id: '/', label: 'Home', icon: FiHome },
@@ -19,16 +18,10 @@ const Sidebar = () => {
     { id: '/how-it-works', label: 'How It Works', icon: FiUsers },
     { id: '/explore-skills', label: 'Explore Skills', icon: FiCompass },
     { id: '/top-instructors', label: 'Top Instructors', icon: FiAward },
+    { id: '/become-creator', label: 'Become Creator', icon: FiVideo },
+    { id: '/profile', label: 'Profile', icon: FiUser },
     { id: '/contact', label: 'Contact', icon: FiMessageCircle },
   ];
-
-  // Add profile link if user is authenticated
-  const displayMenuItems = isAuthenticated 
-    ? [
-        ...menuItems,
-        { id: '/profile', label: 'My Profile', icon: FiUser }
-      ]
-    : menuItems;
 
   const itemVariants = {
     open: {
@@ -112,7 +105,7 @@ const Sidebar = () => {
               }
             }}
           >
-            {displayMenuItems.map((item) => {
+            {menuItems.map((item) => {
               const Icon = item.icon;
               return (
                 <motion.li
@@ -133,26 +126,23 @@ const Sidebar = () => {
             })}
           </motion.ul>
 
-          {/* CTA Button or User Dashboard */}
+          {/* CTA Button or Logout */}
           {isAuthenticated ? (
-            <>
-              <UserDashboard />
-              <motion.div
-                className="sidebar-logout"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.8 }}
+            <motion.div
+              className="sidebar-logout"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.8 }}
+            >
+              <LogoutButton 
+                variant="ghost" 
+                size="small" 
+                className="sidebar-logout-btn"
+                showConfirmation={true}
               >
-                <LogoutButton 
-                  variant="ghost" 
-                  size="small" 
-                  className="sidebar-logout-btn"
-                  showConfirmation={true}
-                >
-                  Logout Account
-                </LogoutButton>
-              </motion.div>
-            </>
+                Logout Account
+              </LogoutButton>
+            </motion.div>
           ) : (
             <motion.div
               className="sidebar-cta"

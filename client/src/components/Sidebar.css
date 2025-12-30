@@ -38,6 +38,7 @@
   flex-direction: column;
   position: relative;
   z-index: 2;
+  overflow: hidden;
 }
 
 .logo {
@@ -100,6 +101,64 @@
 .nav-menu {
   list-style: none;
   flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 0.5rem;
+  margin-right: -0.5rem;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(95, 149, 152, 0.3) transparent;
+  scroll-behavior: smooth;
+  position: relative;
+}
+
+.nav-menu::before {
+  content: '';
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 20px;
+  background: linear-gradient(to bottom, rgba(6, 30, 41, 0.8), transparent);
+  z-index: 10;
+  pointer-events: none;
+}
+
+.nav-menu::after {
+  content: '';
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 20px;
+  background: linear-gradient(to top, rgba(6, 30, 41, 0.8), transparent);
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* Custom scrollbar for webkit browsers */
+.nav-menu::-webkit-scrollbar {
+  width: 6px;
+}
+
+.nav-menu::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 3px;
+}
+
+.nav-menu::-webkit-scrollbar-thumb {
+  background: rgba(95, 149, 152, 0.3);
+  border-radius: 3px;
+  transition: background 0.3s ease;
+}
+
+.nav-menu::-webkit-scrollbar-thumb:hover {
+  background: rgba(95, 149, 152, 0.5);
+}
+
+/* Smooth scroll animation */
+.nav-menu {
+  scroll-padding-top: 20px;
+  scroll-padding-bottom: 20px;
 }
 
 .nav-item {
@@ -298,6 +357,16 @@
 
   .sidebar-content {
     padding: 2rem 1.5rem;
+    overflow: hidden;
+  }
+
+  .nav-menu {
+    padding-right: 0.3rem;
+    margin-right: -0.3rem;
+  }
+
+  .nav-menu::-webkit-scrollbar {
+    width: 4px;
   }
 
   .logo-container {
