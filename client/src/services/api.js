@@ -1,13 +1,23 @@
 import axios from 'axios';
 
 // Create axios instance with base configuration
+const baseURL = process.env.NODE_ENV === 'production' 
+  ? process.env.REACT_APP_API_URL || window.location.origin + '/api'
+  : 'http://localhost:5000/api';
+
+console.log('=== API Configuration Debug ===');
+console.log('NODE_ENV:', process.env.NODE_ENV);
+console.log('REACT_APP_API_URL:', process.env.REACT_APP_API_URL);
+console.log('Window origin:', typeof window !== 'undefined' ? window.location.origin : 'undefined');
+console.log('Final API Base URL:', baseURL);
+console.log('================================');
+
 const API = axios.create({
-  baseURL: process.env.NODE_ENV === 'production' 
-    ? process.env.REACT_APP_API_URL || 'https://your-backend-url.railway.app/api'
-    : 'http://localhost:5000/api',
+  baseURL: baseURL,
   headers: {
     'Content-Type': 'application/json',
   },
+  timeout: 10000, // 10 second timeout
 });
 
 // Request interceptor to add auth token
@@ -45,20 +55,52 @@ export const authAPI = {
   // Register new user
   register: async (userData) => {
     try {
+      console.log('=== Register API Call ===');
+      console.log('Calling:', API.defaults.baseURL + '/auth/register');
+      console.log('User data:', { ...userData, password: '***' });
+      
       const response = await API.post('/auth/register', userData);
+      console.log('Register response status:', response.status);
+      console.log('Register response data:', response.data);
       return response.data;
     } catch (error) {
-      throw error.response?.data || { message: 'Registration failed' };
+      console.error('=== Register API Error ===');
+      console.error('Error type:', error.name);
+      console.error('Error message:', error.message);
+      console.error('Error code:', error.code);
+      console.error('Response status:', error.response?.status);
+      console.error('Response data:', error.response?.data);
+      console.error('Request URL:', error.config?.url);
+      console.error('Full error:', error);
+      console.error('========================');
+      
+      throw error.response?.data || { message: 'Network error - unable to connect to server' };
     }
   },
 
   // Login user
   login: async (credentials) => {
     try {
+      console.log('=== Login API Call ===');
+      console.log('Calling:', API.defaults.baseURL + '/auth/login');
+      console.log('Credentials:', { email: credentials.email, hasPassword: !!credentials.password });
+      
       const response = await API.post('/auth/login', credentials);
+      console.log('Login response status:', response.status);
+      console.log('Login response data:', response.data);
       return response.data;
     } catch (error) {
-      throw error.response?.data || { message: 'Login failed' };
+      console.error('=== Login API Error ===');
+      console.error('Error type:', error.name);
+      console.error('Error message:', error.message);
+      console.error('Error code:', error.code);
+      console.error('Response status:', error.response?.status);
+      console.error('Response data:', error.response?.data);
+      console.error('Request URL:', error.config?.url);
+      console.error('Full error:', error);
+      console.error('=====================');
+      
+      throw error.response?.data || { message: 'Network error - unable to connect to server' };
     }
   },
 

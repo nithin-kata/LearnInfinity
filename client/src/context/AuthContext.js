@@ -72,6 +72,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (credentials) => {
     try {
+      console.log('Attempting login with API base URL:', process.env.NODE_ENV === 'production' ? 'Production' : 'Development');
       const response = await authAPI.login(credentials);
       if (response.success) {
         const userData = {
@@ -95,15 +96,20 @@ export const AuthProvider = ({ children }) => {
       }
     } catch (error) {
       console.error('Login error:', error);
+      console.error('Error response:', error.response);
+      console.error('Error message:', error.message);
+      
       // Provide more specific error messages
-      if (error.response?.status === 500) {
+      if (error.code === 'NETWORK_ERROR' || error.message.includes('Network Error')) {
+        throw new Error('Unable to connect to server. Please check if the backend is running.');
+      } else if (error.response?.status === 500) {
         throw new Error('Server error. Please try again later.');
       } else if (error.response?.status === 401) {
         throw new Error('Invalid email or password.');
       } else if (error.message) {
         throw new Error(error.message);
       } else {
-        throw new Error('Unable to connect to server. Please check your internet connection.');
+        throw new Error('Login failed. Please check your connection and try again.');
       }
     }
   };

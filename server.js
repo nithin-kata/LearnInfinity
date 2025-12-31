@@ -21,7 +21,11 @@ const activeSessions = new Map(); // userId -> { startTime, lastActivity, credit
 // Middleware
 const corsOptions = {
   origin: process.env.NODE_ENV === 'production' 
-    ? ['https://your-frontend-url.vercel.app', 'https://learninfinity.vercel.app']
+    ? [
+        'https://your-render-app-name.onrender.com',
+        /\.onrender\.com$/,
+        process.env.FRONTEND_URL
+      ]
     : ['http://localhost:3000'],
   credentials: true,
   optionsSuccessStatus: 200
@@ -163,6 +167,18 @@ app.get('/api/health', (req, res) => {
   res.json({ 
     message: 'LearnInfinity API is running!',
     database: mongoose.connection.readyState === 1 ? 'Connected' : 'Disconnected',
+    timestamp: new Date().toISOString(),
+    environment: process.env.NODE_ENV,
+    cors: 'enabled'
+  });
+});
+
+// Test CORS endpoint
+app.get('/api/test-cors', (req, res) => {
+  res.json({
+    message: 'CORS is working!',
+    origin: req.headers.origin,
+    method: req.method,
     timestamp: new Date().toISOString()
   });
 });
