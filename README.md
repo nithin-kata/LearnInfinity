@@ -166,12 +166,6 @@ LearnInfinity is a comprehensive skill-sharing platform that revolutionizes how 
 - Input validation and sanitization
 - Session management and automatic cleanup
 
-## 📞 Contact & Support
-
-- **Email**: learn@infinity.com
-- **Phone**: Coming soon
-- **Location**: Hyderabad, Telangana
-
 ## 🤝 Contributing
 
 We welcome contributions to LearnInfinity! Please read our contributing guidelines and feel free to submit pull requests or open issues.
